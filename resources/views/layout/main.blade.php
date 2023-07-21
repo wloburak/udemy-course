@@ -21,6 +21,7 @@
         </style>
     </head>
     <body class="antialiased">
-        <h1 style="text-align:center;">{{ 'Home Page' }}</h1>
+        @include('layout.navigation')
+        @yield('content')
     </body>
 </html>

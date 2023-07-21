@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 /*
@@ -13,4 +14,16 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', [HomeController::class, 'home']);
+Route::get('/', [HomeController::class, 'home'])->name('routes.web');
+
+// Unauth group
+Route::group(['before' => 'guest'], function() {
+
+    // CSRF protection
+    Route::group(['before' => 'csrf'], function() {
+
+    });
+
+    // Create an accout 
+    Route::get('/account/create', [AccountController::class, 'getCreate'] );
+});
