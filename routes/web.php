@@ -14,7 +14,7 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', [HomeController::class, 'home'])->name('routes.web');
+Route::get('/', [HomeController::class, 'home'])->name('home');
 
 // Unauth group
 Route::group(['before' => 'guest'], function() {
@@ -22,8 +22,16 @@ Route::group(['before' => 'guest'], function() {
     // CSRF protection
     Route::group(['before' => 'csrf'], function() {
 
+        // Create an account (POST)
+        Route::post('/account/create', [AccountController::class, 'postCreate'] )->name('account-create-post');
+        
     });
 
     // Create an accout 
-    Route::get('/account/create', [AccountController::class, 'getCreate'] );
+    Route::get('/account/create', [AccountController::class, 'getCreate'] )->name('account-create');
+    Route::get('/account/activate/{code}', [AccountController::class, 'getActivate'] )->name('account-activate');
+
+    // Sign in 
+    Route::get('/account/sign-in', [AccountController::class, 'getSignIn'] )->name('account-sign-in');
+    Route::get('/account/sign-in', [AccountController::class, 'postSignIn'] )->name('account-sign-in-post');
 });
